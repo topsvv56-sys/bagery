@@ -1,30 +1,37 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:application_bagery/main.dart';
+import 'package:application_bagery/theme.dart';
+import 'package:application_bagery/pages/product_detail_page.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  test('formatPrice adds baht sign and thousand separators', () {
+    expect(formatPrice(45), '฿45');
+    expect(formatPrice(1250), '฿1,250');
+    expect(formatPrice(1234567.5), '฿1,234,567.50');
+  });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  testWidgets('QuantityStepper increments and decrements', (tester) async {
+    var value = 1;
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: StatefulBuilder(
+          builder: (context, setState) => QuantityStepper(
+            value: value,
+            min: 1,
+            max: 3,
+            onChanged: (v) => setState(() => value = v),
+          ),
+        ),
+      ),
+    ));
 
-    // Tap the '+' icon and trigger a frame.
     await tester.tap(find.byIcon(Icons.add));
     await tester.pump();
+    expect(find.text('2'), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
+    await tester.tap(find.byIcon(Icons.remove));
+    await tester.pump();
     expect(find.text('1'), findsOneWidget);
   });
 }
