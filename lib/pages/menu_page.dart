@@ -77,14 +77,14 @@ class _MenuPageState extends State<MenuPage> {
     final columns = width > 1000 ? 4 : (width > 650 ? 3 : 2);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('เมนูขนม')),
+      appBar: AppBar(title: const Text('ເມນູເຂົ້າໜົມ')),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
             child: SearchField(
               controller: _searchCtrl,
-              hint: 'ค้นหาชื่อขนม หมวด หรือรายละเอียด',
+              hint: 'ຄົ້ນຫາຊື່ເຂົ້າໜົມ, ໝວດ ຫຼື ລາຍລະອຽດ',
               onChanged: _onSearchChanged,
             ),
           ),
@@ -119,7 +119,7 @@ class _MenuPageState extends State<MenuPage> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'พบ ${_products.length} รายการ',
+                'ພົບ ${_products.length} ລາຍການ',
                 style: const TextStyle(color: AppColors.mocha),
               ),
             ),
@@ -130,7 +130,7 @@ class _MenuPageState extends State<MenuPage> {
                 : _products.isEmpty
                     ? EmptyState(
                         icon: Icons.search_off,
-                        message: 'ไม่พบขนมที่ค้นหา\nลองใช้คำอื่นดูนะ',
+                        message: 'ບໍ່ພົບເຂົ້າໜົມທີ່ຄົ້ນຫາ\nລອງໃຊ້ຄຳອື່ນເບິ່ງເດີ້',
                       )
                     : GridView.builder(
                         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),

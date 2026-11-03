@@ -93,7 +93,7 @@ ThemeData buildAppTheme() {
   );
 }
 
-/// แปลงตัวเลขเป็นราคา เช่น 1250 -> ฿1,250
+/// ແປງຕົວເລກເປັນລາຄາ ເຊັ່ນ 45000 -> ₭45,000
 String formatPrice(num value) {
   final fixed = value % 1 == 0 ? value.toInt().toString() : value.toStringAsFixed(2);
   final parts = fixed.split('.');
@@ -103,7 +103,7 @@ String formatPrice(num value) {
     if (i > 0 && (digits.length - i) % 3 == 0) buf.write(',');
     buf.write(digits[i]);
   }
-  return '฿$buf${parts.length > 1 ? '.${parts[1]}' : ''}';
+  return '₭$buf${parts.length > 1 ? '.${parts[1]}' : ''}';
 }
 
 /// แปลงวันที่ ISO เป็นรูปแบบ dd/MM/yyyy HH:mm

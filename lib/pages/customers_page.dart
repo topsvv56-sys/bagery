@@ -52,14 +52,14 @@ class _CustomersPageState extends State<CustomersPage> {
     final totalSales = _customers.fold<double>(0, (s, c) => s + c.totalSpent);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('ข้อมูลลูกค้า')),
+      appBar: AppBar(title: const Text('ຂໍ້ມູນລູກຄ້າ')),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(builder: (_) => const CustomerFormPage()),
         ),
         icon: const Icon(Icons.person_add),
-        label: const Text('เพิ่มลูกค้า'),
+        label: const Text('ເພີ່ມລູກຄ້າ'),
       ),
       body: Column(
         children: [
@@ -67,7 +67,7 @@ class _CustomersPageState extends State<CustomersPage> {
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
             child: SearchField(
               controller: _searchCtrl,
-              hint: 'ค้นหาชื่อ เบอร์โทร หรือที่อยู่',
+              hint: 'ຄົ້ນຫາຊື່, ເບີໂທ ຫຼື ທີ່ຢູ່',
               onChanged: (_) {
                 _debounce?.cancel();
                 _debounce = Timer(const Duration(milliseconds: 250), _load);
@@ -80,14 +80,14 @@ class _CustomersPageState extends State<CustomersPage> {
               children: [
                 _StatBox(
                   icon: Icons.people,
-                  label: 'ลูกค้า',
-                  value: '${_customers.length} คน',
+                  label: 'ລູກຄ້າ',
+                  value: '${_customers.length} ຄົນ',
                   color: AppColors.caramel,
                 ),
                 const SizedBox(width: 12),
                 _StatBox(
                   icon: Icons.payments,
-                  label: 'ยอดขายรวม',
+                  label: 'ຍອດຂາຍລວມ',
                   value: formatPrice(totalSales),
                   color: AppColors.strawberry,
                 ),
@@ -102,8 +102,8 @@ class _CustomersPageState extends State<CustomersPage> {
                     ? EmptyState(
                         icon: Icons.person_search,
                         message: _searchCtrl.text.isEmpty
-                            ? 'ยังไม่มีข้อมูลลูกค้า\nกด "เพิ่มลูกค้า" หรือสั่งซื้อสินค้าได้เลย'
-                            : 'ไม่พบลูกค้าที่ค้นหา',
+                            ? 'ຍັງບໍ່ມີຂໍ້ມູນລູກຄ້າ\nກົດ "ເພີ່ມລູກຄ້າ" ຫຼື ສັ່ງຊື້ສິນຄ້າໄດ້ເລີຍ'
+                            : 'ບໍ່ພົບລູກຄ້າທີ່ຄົ້ນຫາ',
                       )
                     : ListView.separated(
                         padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
@@ -129,7 +129,7 @@ class _CustomersPageState extends State<CustomersPage> {
                               title: Text(c.name,
                                   style: const TextStyle(fontWeight: FontWeight.bold)),
                               subtitle: Text(
-                                '${c.phone.isEmpty ? '-' : c.phone}  •  สั่ง ${c.orderCount} ครั้ง',
+                                '${c.phone.isEmpty ? '-' : c.phone}  •  ສັ່ງ ${c.orderCount} ຄັ້ງ',
                                 style: const TextStyle(color: AppColors.mocha),
                               ),
                               trailing: Text(
@@ -246,13 +246,13 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('ลบลูกค้า?'),
-        content: Text('ลบ "${_customer.name}" และประวัติการสั่งซื้อทั้งหมด'),
+        title: const Text('ລຶບລູກຄ້າ?'),
+        content: Text('ລຶບ "${_customer.name}" ແລະ ປະຫວັດການສັ່ງຊື້ທັງໝົດ?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('ยกเลิก')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('ຍົກເລີກ')),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('ลบ', style: TextStyle(color: AppColors.strawberry)),
+            child: const Text('ລຶບ', style: TextStyle(color: AppColors.strawberry)),
           ),
         ],
       ),
@@ -268,7 +268,7 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
     final c = _customer;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('รายละเอียดลูกค้า'),
+        title: const Text('ລາຍລະອຽດລູກຄ້າ'),
         actions: [
           IconButton(onPressed: _edit, icon: const Icon(Icons.edit)),
           IconButton(
@@ -305,7 +305,7 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
                   _InfoRow(Icons.phone, c.phone),
                   _InfoRow(Icons.location_on, c.address),
                   _InfoRow(Icons.sticky_note_2, c.note),
-                  _InfoRow(Icons.calendar_today, 'สมาชิกตั้งแต่ ${formatDate(c.createdAt)}'),
+                  _InfoRow(Icons.calendar_today, 'ສະມາຊິກຕັ້ງແຕ່ ${formatDate(c.createdAt)}'),
                   const Divider(height: 28),
                   Row(
                     children: [
@@ -316,7 +316,7 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.caramel)),
-                          const Text('คำสั่งซื้อ', style: TextStyle(color: AppColors.mocha)),
+                          const Text('ຄຳສັ່ງຊື້', style: TextStyle(color: AppColors.mocha)),
                         ]),
                       ),
                       Expanded(
@@ -326,7 +326,7 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.strawberry)),
-                          const Text('ยอดซื้อรวม', style: TextStyle(color: AppColors.mocha)),
+                          const Text('ຍອດຊື້ລວມ', style: TextStyle(color: AppColors.mocha)),
                         ]),
                       ),
                     ],
@@ -336,13 +336,13 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
             ),
           ),
           const SizedBox(height: 20),
-          const Text('ประวัติการสั่งซื้อ',
+          const Text('ປະຫວັດການສັ່ງຊື້',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           if (_loading)
             const Center(child: CircularProgressIndicator())
           else if (_orders.isEmpty)
-            const EmptyState(icon: Icons.receipt_long, message: 'ยังไม่มีคำสั่งซื้อ')
+            const EmptyState(icon: Icons.receipt_long, message: 'ຍັງບໍ່ມີຄຳສັ່ງຊື້')
           else
             for (final o in _orders)
               Card(

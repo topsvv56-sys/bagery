@@ -16,7 +16,7 @@ class CartPage extends StatelessWidget {
     final cart = Cart.instance;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ตะกร้าของฉัน'),
+        title: const Text('ກະຕ່າຂອງຂ້ອຍ'),
         actions: [
           ListenableBuilder(
             listenable: cart,
@@ -25,7 +25,7 @@ class CartPage extends StatelessWidget {
                 : TextButton.icon(
                     onPressed: () => _confirmClear(context),
                     icon: const Icon(Icons.delete_sweep, color: AppColors.strawberry),
-                    label: const Text('ล้าง', style: TextStyle(color: AppColors.strawberry)),
+                    label: const Text('ລຶບທັງໝົດ', style: TextStyle(color: AppColors.strawberry)),
                   ),
           ),
         ],
@@ -40,9 +40,9 @@ class CartPage extends StatelessWidget {
                 children: [
                   const EmptyState(
                     icon: Icons.shopping_bag_outlined,
-                    message: 'ตะกร้ายังว่างอยู่\nเลือกขนมอร่อย ๆ กันเถอะ',
+                    message: 'ກະຕ່າຍັງວ່າງຢູ່\nເລືອກເຂົ້າໜົມແຊບໆກັນເລີຍ',
                   ),
-                  ElevatedButton(onPressed: onShopMore, child: const Text('ไปที่เมนู')),
+                  ElevatedButton(onPressed: onShopMore, child: const Text('ໄປທີ່ເມນູ')),
                 ],
               ),
             );
@@ -95,7 +95,7 @@ class CartPage extends StatelessWidget {
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold, fontSize: 15)),
-                                    Text('${formatPrice(p.price)} / ชิ้น',
+                                    Text('${formatPrice(p.price)} / ອັນ',
                                         style: const TextStyle(color: AppColors.mocha)),
                                     const SizedBox(height: 6),
                                     QuantityStepper(
@@ -136,11 +136,11 @@ class CartPage extends StatelessWidget {
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('ล้างตะกร้า?'),
-        content: const Text('ต้องการลบสินค้าทั้งหมดในตะกร้าใช่ไหม'),
+        title: const Text('ລຶບກະຕ່າ?'),
+        content: const Text('ຕ້ອງການລຶບສິນຄ້າທັງໝົດໃນກະຕ່າບໍ່?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('ยกเลิก')),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('ล้าง')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('ຍົກເລີກ')),
+          TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('ລຶບ')),
         ],
       ),
     );
@@ -166,15 +166,15 @@ class _Summary extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Text('จำนวนทั้งหมด', style: TextStyle(color: AppColors.mocha)),
+              const Text('ຈຳນວນທັງໝົດ', style: TextStyle(color: AppColors.mocha)),
               const Spacer(),
-              Text('${cart.totalQuantity} ชิ้น'),
+              Text('${cart.totalQuantity} ອັນ'),
             ],
           ),
           const SizedBox(height: 6),
           Row(
             children: [
-              const Text('ยอดรวม',
+              const Text('ຍອດລວມ',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               const Spacer(),
               Text(
@@ -196,7 +196,7 @@ class _Summary extends StatelessWidget {
                 MaterialPageRoute(builder: (_) => const CheckoutPage()),
               ),
               icon: const Icon(Icons.receipt_long),
-              label: const Text('สั่งซื้อ'),
+              label: const Text('ສັ່ງຊື້'),
             ),
           ),
         ],

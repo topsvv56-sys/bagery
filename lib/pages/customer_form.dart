@@ -61,10 +61,10 @@ class CustomerFormBody extends StatelessWidget {
           controller: fields.name,
           textInputAction: TextInputAction.next,
           decoration: const InputDecoration(
-            labelText: 'ชื่อลูกค้า *',
+            labelText: 'ຊື່ລູກຄ້າ *',
             prefixIcon: Icon(Icons.person, color: AppColors.caramel),
           ),
-          validator: (v) => (v == null || v.trim().isEmpty) ? 'กรุณากรอกชื่อ' : null,
+          validator: (v) => (v == null || v.trim().isEmpty) ? 'ກະລຸນາໃສ່ຊື່' : null,
         ),
         const SizedBox(height: 12),
         TextFormField(
@@ -72,13 +72,13 @@ class CustomerFormBody extends StatelessWidget {
           keyboardType: TextInputType.phone,
           textInputAction: TextInputAction.next,
           decoration: const InputDecoration(
-            labelText: 'เบอร์โทร *',
+            labelText: 'ເບີໂທ *',
             prefixIcon: Icon(Icons.phone, color: AppColors.caramel),
           ),
           validator: (v) {
             final digits = (v ?? '').replaceAll(RegExp(r'[^0-9]'), '');
-            if (digits.isEmpty) return 'กรุณากรอกเบอร์โทร';
-            if (digits.length < 9 || digits.length > 10) return 'เบอร์โทรไม่ถูกต้อง';
+            if (digits.isEmpty) return 'ກະລຸນາໃສ່ເບີໂທ';
+            if (digits.length < 8 || digits.length > 15) return 'ເບີໂທບໍ່ຖືກຕ້ອງ';
             return null;
           },
         ),
@@ -87,7 +87,7 @@ class CustomerFormBody extends StatelessWidget {
           controller: fields.address,
           maxLines: 2,
           decoration: const InputDecoration(
-            labelText: 'ที่อยู่จัดส่ง',
+            labelText: 'ທີ່ຢູ່ຈັດສົ່ງ',
             prefixIcon: Icon(Icons.location_on, color: AppColors.caramel),
           ),
         ),
@@ -95,7 +95,7 @@ class CustomerFormBody extends StatelessWidget {
         TextFormField(
           controller: fields.note,
           decoration: const InputDecoration(
-            labelText: 'หมายเหตุ (เช่น แพ้ถั่ว, ไม่หวานมาก)',
+            labelText: 'ໝາຍເຫດ (ເຊັ່ນ: ແພ້ຖົ່ວ, ບໍ່ຫວານຫຼາຍ)',
             prefixIcon: Icon(Icons.sticky_note_2, color: AppColors.caramel),
           ),
         ),
@@ -145,7 +145,7 @@ class _CustomerFormPageState extends State<CustomerFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(_isEdit ? 'แก้ไขข้อมูลลูกค้า' : 'เพิ่มลูกค้าใหม่')),
+      appBar: AppBar(title: Text(_isEdit ? 'ແກ້ໄຂຂໍ້ມູນລູກຄ້າ' : 'ເພີ່ມລູກຄ້າໃໝ່')),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -169,7 +169,7 @@ class _CustomerFormPageState extends State<CustomerFormPage> {
           child: ElevatedButton.icon(
             onPressed: _save,
             icon: const Icon(Icons.save),
-            label: const Text('บันทึก'),
+            label: const Text('ບັນທຶກ'),
           ),
         ),
       ),

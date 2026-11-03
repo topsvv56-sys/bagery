@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import '../data/cart.dart';
 import '../data/database_helper.dart';
@@ -31,9 +31,9 @@ class _HomePageState extends State<HomePage> {
   bool _loading = true;
 
   static const _categoryIcons = {
-    'ขนมปัง': Icons.bakery_dining,
-    'เค้ก': Icons.cake,
-    'ขนมหวาน': Icons.icecream,
+    'ເຂົ້າໜົມປັງ': Icons.bakery_dining,
+    'ເຄັກ': Icons.cake,
+    'ເຂົ້າໜົມຫວານ': Icons.icecream,
   };
 
   @override
@@ -50,13 +50,25 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  String? _error;
+
   Future<void> _load() async {
-    final list = await _db.getProducts();
-    if (!mounted) return;
-    setState(() {
-      _products = list;
-      _loading = false;
-    });
+    try {
+      final list = await _db.getProducts().timeout(const Duration(seconds: 15));
+      if (!mounted) return;
+      setState(() {
+        _products = list;
+        _loading = false;
+        _error = null;
+      });
+    } catch (e) {
+      debugPrint('Database error: $e');
+      if (!mounted) return;
+      setState(() {
+        _loading = false;
+        _error = 'ເປີດຖານຂໍ້ມູນບໍ່ສຳເລັດ\n$e';
+      });
+    }
   }
 
   void _submitSearch(String q) {
@@ -79,6 +91,22 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: _loading
           ? const Center(child: CircularProgressIndicator())
+          : _error != null
+          ? Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  EmptyState(icon: Icons.error_outline, message: _error!),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() => _loading = true);
+                      _load();
+                    },
+                    child: const Text('ລອງໃໝ່'),
+                  ),
+                ],
+              ),
+            )
           : RefreshIndicator(
               onRefresh: _load,
               child: ListView(
@@ -93,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('สวัสดีค่ะ 👋',
+                              Text('ສະບາຍດີ 👋',
                                   style: TextStyle(color: AppColors.mocha, fontSize: 15)),
                               Text(
                                 'Sweet Crumb Bakery',
@@ -120,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                     child: SearchField(
                       controller: _searchCtrl,
-                      hint: 'ค้นหาขนมที่คุณชอบ...',
+                      hint: 'ຄົ້ນຫາເຂົ້າໜົມທີ່ທ່ານມັກ...',
                       onSubmitted: _submitSearch,
                     ),
                   ),
@@ -155,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Text(
-                                    'อบสดใหม่ทุกวัน',
+                                    'ອົບສົດໃໝ່ທຸກມື້',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 22,
@@ -163,7 +191,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   const Text(
-                                    'หอมกรุ่นจากเตาถึงมือคุณ',
+                                    'ຫອມກຸ່ນຈາກເຕົາເຖິງມືທ່ານ',
                                     style: TextStyle(color: AppColors.butter),
                                   ),
                                   const SizedBox(height: 12),
@@ -172,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                                       backgroundColor: AppColors.strawberry,
                                     ),
                                     onPressed: widget.onSeeAll,
-                                    child: const Text('สั่งเลย'),
+                                    child: const Text('ສັ່ງເລີຍ'),
                                   ),
                                 ],
                               ),
@@ -184,7 +212,7 @@ class _HomePageState extends State<HomePage> {
                   ),
 
                   // ---------- หมวดหมู่ ----------
-                  const _SectionTitle('หมวดหมู่'),
+                  const _SectionTitle('ໝວດໝູ່'),
                   SizedBox(
                     height: 96,
                     child: ListView(
@@ -226,7 +254,7 @@ class _HomePageState extends State<HomePage> {
                   ),
 
                   // ---------- แนะนำ ----------
-                  _SectionTitle('เมนูแนะนำ', action: 'ดูทั้งหมด', onAction: widget.onSeeAll),
+                  _SectionTitle('ເມນູແນະນຳ', action: 'ເບິ່ງທັງໝົດ', onAction: widget.onSeeAll),
                   SizedBox(
                     height: 250,
                     child: ListView.separated(
@@ -252,10 +280,10 @@ class _HomePageState extends State<HomePage> {
                   ),
 
                   // ---------- ราคาประหยัด ----------
-                  const _SectionTitle('ขนมราคาสบายกระเป๋า'),
+                  const _SectionTitle('ເຂົ້າໜົມລາຄາສະບາຍກະເປົາ'),
                   for (final p in [..._products]
                     ..sort((a, b) => a.price.compareTo(b.price)))
-                    if (p.price <= 45)
+                    if (p.price <= 25000)
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
                         child: Card(
@@ -274,7 +302,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             title: Text(p.name,
                                 style: const TextStyle(fontWeight: FontWeight.bold)),
-                            subtitle: Text('คงเหลือ ${p.stock} ชิ้น',
+                            subtitle: Text('ຍັງເຫຼືອ ${p.stock} ອັນ',
                                 style: const TextStyle(color: AppColors.mocha)),
                             trailing: Text(
                               formatPrice(p.price),

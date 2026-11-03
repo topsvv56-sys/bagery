@@ -56,12 +56,12 @@ class _MainShellState extends State<MainShell> {
             const NavigationDestination(
               icon: Icon(Icons.home_outlined),
               selectedIcon: Icon(Icons.home, color: AppColors.caramel),
-              label: 'หน้าหลัก',
+              label: 'ໜ້າຫຼັກ',
             ),
             const NavigationDestination(
               icon: Icon(Icons.bakery_dining_outlined),
               selectedIcon: Icon(Icons.bakery_dining, color: AppColors.caramel),
-              label: 'เมนู',
+              label: 'ເມນູ',
             ),
             NavigationDestination(
               icon: Badge(
@@ -76,12 +76,12 @@ class _MainShellState extends State<MainShell> {
                 label: Text('${Cart.instance.totalQuantity}'),
                 child: const Icon(Icons.shopping_bag, color: AppColors.caramel),
               ),
-              label: 'ตะกร้า',
+              label: 'ກະຕ່າ',
             ),
             const NavigationDestination(
               icon: Icon(Icons.people_outline),
               selectedIcon: Icon(Icons.people, color: AppColors.caramel),
-              label: 'ลูกค้า',
+              label: 'ລູກຄ້າ',
             ),
           ],
         ),

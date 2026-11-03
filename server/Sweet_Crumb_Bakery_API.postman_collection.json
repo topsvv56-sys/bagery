@@ -1,0 +1,197 @@
+{
+  "info": {
+    "_postman_id": "bakery-api-collection-2026-lao",
+    "name": "Sweet Crumb Bakery API (ພາສາລາວ)",
+    "description": "API ສຳລັບເບິ່ງ ແລະ ຈັດການຂໍ້ມູນຮ້ານເຂົ້າໜົມ (ສິນຄ້າ, ລູກຄ້າ, ຄຳສັ່ງຊື້) ເທິງ Postman ເປັນພາສາລາວ",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. ສິນຄ້າ (Products)",
+      "item": [
+        {
+          "name": "ດຶງສິນຄ້າທັງໝົດ (Get All Products)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products"]
+            },
+            "description": "ເບິ່ງລາຍການເຂົ້າໜົມທັງໝົດໃນຮ້ານ ພ້ອມລາຄາ, ຮູບພາບ ແລະ ຈຳນວນສະຕັອກຍັງເຫຼືອ"
+          },
+          "response": []
+        },
+        {
+          "name": "ຄົ້ນຫາເຂົ້າໜົມຕາມຊື່ (Search Products)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?search=ຄົວຊອງ",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "ຄົວຊອງ",
+                  "description": "ຄຳຄົ້ນຫາ ເຊັ່ນ: ຄົວຊອງ, ເຄັກ, ຊັອກໂກແລັດ"
+                }
+              ]
+            },
+            "description": "ຄົ້ນຫາເຂົ້າໜົມຕາມຄຳຄົ້ນຫາ"
+          },
+          "response": []
+        },
+        {
+          "name": "ກັ່ນຕອງສິນຄ້າຕາມໝວດໝູ່ (Filter Category)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products?category=ເຄັກ",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products"],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "ເຄັກ",
+                  "description": "ໝວດໝູ່: ເຂົ້າໜົມປັງ, ເຄັກ, ເຂົ້າໜົມຫວານ"
+                }
+              ]
+            },
+            "description": "ກັ່ນຕອງສິນຄ້າຕາມໝວດໝູ່"
+          },
+          "response": []
+        },
+        {
+          "name": "ເບິ່ງສິນຄ້າຕາມ ID (Get Product by ID)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", "1"]
+            },
+            "description": "ເບິ່ງລາຍລະອຽດສິນຄ້າອັນທີ 1"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. ລູກຄ້າ (Customers)",
+      "item": [
+        {
+          "name": "ເບິ່ງລາຍຊື່ລູກຄ້າທັງໝົດ (Get All Customers)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers"]
+            },
+            "description": "ເບິ່ງລາຍຊື່ລູກຄ້າທັງໝົດ ພ້ອມສະຖິຕິຈຳນວນຄັ້ງທີ່ສັ່ງ ແລະ ຍອດເງິນລວມ"
+          },
+          "response": []
+        },
+        {
+          "name": "ຄົ້ນຫາລູກຄ້າຕາມຊື່ ຫຼື ເບີໂທ (Search Customers)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers?search=ສົມໄຊ",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "ສົມໄຊ",
+                  "description": "ຊື່ ຫຼື ເບີໂທລູກຄ້າ"
+                }
+              ]
+            },
+            "description": "ຄົ້ນຫາລູກຄ້າໃນຖານຂໍ້ມູນ"
+          },
+          "response": []
+        },
+        {
+          "name": "ເພີ່ມລູກຄ້າໃໝ່ (Create Customer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"ມະນີວອນ ຄຳມະນີ\",\n  \"phone\": \"020 77665544\",\n  \"address\": \"ບ້ານໜອງບອນ, ເມືອງໄຊເສດຖາ, ນະຄອນຫຼວງວຽງຈັນ\",\n  \"note\": \"ມັກຊູຄຣີມຫຼາຍ\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/customers",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers"]
+            },
+            "description": "ເພີ່ມຂໍ້ມູນລູກຄ້າໃໝ່ລົງຖານຂໍ້ມູນ"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. ຄຳສັ່ງຊື້ (Orders)",
+      "item": [
+        {
+          "name": "ເບິ່ງລາຍການສັ່ງຊື້ທັງໝົດ (Get All Orders)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"]
+            },
+            "description": "ເບິ່ງປະຫວັດຄຳສັ່ງຊື້ທັງໝົດທີ່ລູກຄ້າສັ່ງ"
+          },
+          "response": []
+        },
+        {
+          "name": "ສ້າງຄຳສັ່ງຊື້ໃໝ່ (Create Order)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_id\": 1,\n  \"items\": [\n    {\n      \"product_id\": 1,\n      \"quantity\": 2\n    },\n    {\n      \"product_id\": 2,\n      \"quantity\": 1\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"]
+            },
+            "description": "ສ້າງຄຳສັ່ງຊື້ໃໝ່ (ລະບົບຈະຄິດໄລ່ລາຄາ ແລະ ຕັດສະຕັອກສິນຄ້າອັດຕະໂນມັດ)"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}

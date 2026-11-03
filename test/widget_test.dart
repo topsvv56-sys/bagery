@@ -5,10 +5,10 @@ import 'package:application_bagery/theme.dart';
 import 'package:application_bagery/pages/product_detail_page.dart';
 
 void main() {
-  test('formatPrice adds baht sign and thousand separators', () {
-    expect(formatPrice(45), '฿45');
-    expect(formatPrice(1250), '฿1,250');
-    expect(formatPrice(1234567.5), '฿1,234,567.50');
+  test('formatPrice adds kip sign and thousand separators', () {
+    expect(formatPrice(45), '₭45');
+    expect(formatPrice(1250), '₭1,250');
+    expect(formatPrice(1234567.5), '₭1,234,567.50');
   });
 
   testWidgets('QuantityStepper increments and decrements', (tester) async {

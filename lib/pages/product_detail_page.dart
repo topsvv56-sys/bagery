@@ -84,13 +84,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           color: AppColors.strawberry,
                         ),
                       ),
-                      const Text(' / ชิ้น', style: TextStyle(color: AppColors.mocha)),
+                      const Text(' / ອັນ', style: TextStyle(color: AppColors.mocha)),
                       const Spacer(),
                       Icon(Icons.inventory_2_outlined,
                           size: 18, color: p.stock > 0 ? AppColors.mint : Colors.grey),
                       const SizedBox(width: 4),
                       Text(
-                        p.stock > 0 ? 'คงเหลือ ${p.stock} ชิ้น' : 'สินค้าหมด',
+                        p.stock > 0 ? 'ຍັງເຫຼືອ ${p.stock} ອັນ' : 'ສິນຄ້າໝົດ',
                         style: TextStyle(
                           color: p.stock > 0 ? AppColors.mint : Colors.grey,
                           fontWeight: FontWeight.w600,
@@ -99,13 +99,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  const Text('รายละเอียด',
+                  const Text('ລາຍລະອຽດ',
                       style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 6),
                   Text(p.description,
                       style: const TextStyle(color: AppColors.mocha, height: 1.6, fontSize: 15)),
                   const SizedBox(height: 24),
-                  const Text('จำนวน',
+                  const Text('ຈຳນວນ',
                       style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
                   Row(
@@ -119,7 +119,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       const SizedBox(width: 12),
                       if (Cart.instance.quantityOf(p.id!) > 0)
                         Text(
-                          'อยู่ในตะกร้า ${Cart.instance.quantityOf(p.id!)} ชิ้น',
+                          'ຢູ່ໃນກະຕ່າ ${Cart.instance.quantityOf(p.id!)} ອັນ',
                           style: const TextStyle(color: AppColors.mocha),
                         ),
                     ],
@@ -145,7 +145,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('ราคารวม', style: TextStyle(color: AppColors.mocha)),
+                  const Text('ລາຄາລວມ', style: TextStyle(color: AppColors.mocha)),
                   Text(
                     formatPrice(canAdd ? p.price * _qty : 0),
                     style: const TextStyle(
@@ -167,7 +167,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         }
                       : null,
                   icon: const Icon(Icons.shopping_bag),
-                  label: Text(canAdd ? 'เพิ่มลงตะกร้า' : 'ไม่มีสินค้าเพิ่ม'),
+                  label: Text(canAdd ? 'ເພີ່ມໃສ່ກະຕ່າ' : 'ບໍ່ມີສິນຄ້າເພີ່ມ'),
                 ),
               ),
             ],

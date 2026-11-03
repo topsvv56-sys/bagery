@@ -59,7 +59,7 @@ class ProductCard extends StatelessWidget {
                     top: 8,
                     left: 8,
                     child: _Badge(
-                      text: soldOut ? 'หมด' : 'เหลือ ${product.stock}',
+                      text: soldOut ? 'ໝົດ' : 'ຍັງເຫຼືອ ${product.stock}',
                       color: soldOut ? Colors.grey : AppColors.cocoa,
                     ),
                   ),
@@ -224,7 +224,7 @@ void showAddedSnack(BuildContext context, Product p, int qty) {
       behavior: SnackBarBehavior.floating,
       backgroundColor: AppColors.cocoa,
       duration: const Duration(seconds: 2),
-      content: Text('เพิ่ม ${p.name} x$qty ลงตะกร้าแล้ว'),
+      content: Text('ເພີ່ມ ${p.name} x$qty ໃສ່ກະຕ່າແລ້ວ'),
     ));
 }
 

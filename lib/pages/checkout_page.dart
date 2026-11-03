@@ -59,7 +59,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     } else {
       if (_selected == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('กรุณาเลือกลูกค้า')),
+          const SnackBar(content: Text('ກະລຸນາເລືອກລູກຄ້າ')),
         );
         return;
       }
@@ -78,18 +78,18 @@ class _CheckoutPageState extends State<CheckoutPage> {
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
         icon: const Icon(Icons.check_circle, color: AppColors.mint, size: 64),
-        title: const Text('สั่งซื้อสำเร็จ!'),
+        title: const Text('ສັ່ງຊື້ສຳເລັດ!'),
         content: Text(
-          'เลขที่คำสั่งซื้อ #${orderId.toString().padLeft(5, '0')}\n'
-          'ลูกค้า: $customerName\n'
-          'ยอดรวม: ${formatPrice(total)}\n\n'
-          'บันทึกข้อมูลลงฐานข้อมูลเรียบร้อย',
+          'ເລກທີຄຳສັ່ງຊື້ #${orderId.toString().padLeft(5, '0')}\n'
+          'ລູກຄ້າ: $customerName\n'
+          'ຍອດລວມ: ${formatPrice(total)}\n\n'
+          'ບັນທຶກຂໍ້ມູນລົງຖານຂໍ້ມູນຮຽບຮ້ອຍ',
           textAlign: TextAlign.center,
         ),
         actions: [
           FilledButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('ตกลง'),
+            child: const Text('ຕົກລົງ'),
           ),
         ],
       ),
@@ -101,7 +101,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     final cart = Cart.instance;
     return Scaffold(
-      appBar: AppBar(title: const Text('ยืนยันคำสั่งซื้อ')),
+      appBar: AppBar(title: const Text('ຢືນຢັນຄຳສັ່ງຊື້')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -113,7 +113,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('สรุปรายการ',
+                  const Text('ສະຫຼຸບລາຍການ',
                       style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                   const Divider(),
                   for (final i in cart.items)
@@ -130,7 +130,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   Row(
                     children: [
                       const Expanded(
-                        child: Text('ยอดรวม',
+                        child: Text('ຍອດລວມ',
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                       ),
                       Text(
@@ -150,13 +150,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
           const SizedBox(height: 20),
 
           // ---- ข้อมูลลูกค้า ----
-          const Text('ข้อมูลลูกค้า',
+          const Text('ຂໍ້ມູນລູກຄ້າ',
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           SegmentedButton<bool>(
             segments: const [
-              ButtonSegment(value: true, label: Text('ลูกค้าใหม่'), icon: Icon(Icons.person_add)),
-              ButtonSegment(value: false, label: Text('ลูกค้าเดิม'), icon: Icon(Icons.people)),
+              ButtonSegment(value: true, label: Text('ລູກຄ້າໃໝ່'), icon: Icon(Icons.person_add)),
+              ButtonSegment(value: false, label: Text('ລູກຄ້າເກົ່າ'), icon: Icon(Icons.people)),
             ],
             selected: {_isNew},
             onSelectionChanged: (s) => setState(() => _isNew = s.first),
@@ -167,14 +167,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
           else ...[
             SearchField(
               controller: _searchCtrl,
-              hint: 'ค้นหาชื่อหรือเบอร์โทรลูกค้า',
+              hint: 'ຄົ້ນຫາຊື່ ຫຼື ເບີໂທລູກຄ້າ',
               onChanged: (_) => _loadCustomers(),
             ),
             const SizedBox(height: 8),
             if (_customers.isEmpty)
               const EmptyState(
                 icon: Icons.person_search,
-                message: 'ไม่พบลูกค้า\nลองเลือก "ลูกค้าใหม่"',
+                message: 'ບໍ່ພົບລູກຄ້າ\nລອງເລືອກ "ລູກຄ້າໃໝ່"',
               )
             else
               RadioGroup<int>(
@@ -213,7 +213,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                   )
                 : const Icon(Icons.check),
-            label: Text('ยืนยันสั่งซื้อ ${formatPrice(cart.totalPrice)}'),
+            label: Text('ຢືນຢັນການສັ່ງຊື້ ${formatPrice(cart.totalPrice)}'),
           ),
         ),
       ),

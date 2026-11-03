@@ -1,4 +1,4 @@
-﻿import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 
@@ -87,7 +87,7 @@ class DatabaseHelper {
 
   // ---------------------------------------------------------------- products
 
-  static const categories = ['ทั้งหมด', 'ขนมปัง', 'เค้ก', 'ขนมหวาน'];
+  static const categories = ['ທັງໝົດ', 'ເຂົ້າໜົມປັງ', 'ເຄັກ', 'ເຂົ້າໜົມຫວານ'];
 
   /// ดึงสินค้า พร้อมค้นหาจากชื่อ / หมวด / คำอธิบาย
   Future<List<Product>> getProducts({String query = '', String? category}) async {
@@ -217,67 +217,67 @@ class DatabaseHelper {
 
   static const _seedProducts = [
     Product(
-      name: 'ครัวซองต์เนยสด',
-      category: 'ขนมปัง',
-      price: 45,
+      name: 'ຄົວຊອງເນີຍສົດ',
+      category: 'ເຂົ້າໜົມປັງ',
+      price: 25000,
       image: 'assets/images/croissant.jpg',
-      description: 'ครัวซองต์อบใหม่ทุกเช้า ใช้เนยสดแท้จากฝรั่งเศส กรอบนอกนุ่มใน หอมเนยทุกคำ',
+      description: 'ຄົວຊອງອົບໃໝ່ທຸກເຊົ້າ ໃຊ້ເນີຍສົດແທ້ຈາກຝຣັ່ງ ກອບນອກນຸ້ມໃນ ຫອມເນີຍທຸກຄຳ',
       stock: 30,
     ),
     Product(
-      name: 'เค้กช็อกโกแลตเข้มข้น',
-      category: 'เค้ก',
-      price: 85,
+      name: 'ເຄັກຊັອກໂກແລັດເຂັ້ມຂຸ້ນ',
+      category: 'ເຄັກ',
+      price: 45000,
       image: 'assets/images/chocolate_cake.jpg',
-      description: 'เค้กช็อกโกแลตเนื้อแน่น ราดด้วยกานาชดาร์กช็อกโกแลต 70% เข้มข้นถึงใจ',
+      description: 'ເຄັກຊັອກໂກແລັດເນື້ອແໜ້ນ ລາດດ້ວຍການາສດາກຊັອກໂກແລັດ 70% ເຂັ້ມຂຸ້ນເຖິງໃຈ',
       stock: 15,
     ),
     Product(
-      name: 'บาแกตต์ฝรั่งเศส',
-      category: 'ขนมปัง',
-      price: 60,
+      name: 'ບາແກັດຝຣັ່ງ',
+      category: 'ເຂົ້າໜົມປັງ',
+      price: 35000,
       image: 'assets/images/baguette.jpg',
-      description: 'ขนมปังบาแกตต์เปลือกกรอบ เนื้อเหนียวนุ่ม เหมาะทำแซนด์วิชหรือทานกับซุป',
+      description: 'ເຂົ້າໜົມປັງບາແກັດເປືອກກອບ ເນື້ອໜຽວນຸ້ມ ເໝາະເຮັດແຊນວິດ ຫຼື ກິນກັບແກງ',
       stock: 20,
     ),
     Product(
-      name: 'โดนัทสตรอว์เบอร์รี',
-      category: 'ขนมหวาน',
-      price: 35,
+      name: 'ໂດນັດສະຕໍເບີຣີ',
+      category: 'ເຂົ້າໜົມຫວານ',
+      price: 20000,
       image: 'assets/images/donut.jpg',
-      description: 'โดนัทเนื้อนุ่มฟู เคลือบไอซิ่งสตรอว์เบอร์รีสีชมพู โรยเม็ดน้ำตาลสีสันสดใส',
+      description: 'ໂດນັດເນື້ອນຸ້ມຟູ ເຄືອບໄອຊິງສະຕໍເບີຣີສີບົວ ໂຣຍເມັດນ້ຳຕານສີສັນສົດໃສ',
       stock: 40,
     ),
     Product(
-      name: 'ซินนามอนโรล',
-      category: 'ขนมปัง',
-      price: 55,
+      name: 'ຊິນນາມອນໂຣລ',
+      category: 'ເຂົ້າໜົມປັງ',
+      price: 30000,
       image: 'assets/images/cinnamon_roll.jpg',
-      description: 'ขนมปังม้วนอบเชย หอมกรุ่น ราดครีมชีสไอซิ่ง ทานคู่กาแฟเข้ากันสุด ๆ',
+      description: 'ເຂົ້າໜົມປັງມ້ວນອົບເຊີຍ ຫອມກຸ່ນ ລາດຄຣີມຊີສໄອຊິງ ກິນຄູ່ກາເຟແຊບຫຼາຍ',
       stock: 25,
     ),
     Product(
-      name: 'สตรอว์เบอร์รีชอร์ตเค้ก',
-      category: 'เค้ก',
-      price: 95,
+      name: 'ສະຕໍເບີຣີຊອດເຄັກ',
+      category: 'ເຄັກ',
+      price: 55000,
       image: 'assets/images/strawberry_cake.jpg',
-      description: 'เค้กสปันจ์นุ่มเบา สลับชั้นวิปครีมสดและสตรอว์เบอร์รีสดหวานอมเปรี้ยว',
+      description: 'ເຄັກສະປັນຈ໌ນຸ້ມເບົາ ສະຫຼັບຊັ້ນວິບຄຣີມສົດ ແລະ ສະຕໍເບີຣີສົດຫວານອົມສົ້ມ',
       stock: 12,
     ),
     Product(
-      name: 'ชูครีมวานิลลา',
-      category: 'ขนมหวาน',
-      price: 25,
+      name: 'ຊູຄຣີມວານິລາ',
+      category: 'ເຂົ້າໜົມຫວານ',
+      price: 15000,
       image: 'assets/images/cream_puff.jpg',
-      description: 'แป้งชูกรอบเบา สอดไส้คัสตาร์ดวานิลลาแท้เต็มคำ หวานกำลังดี',
+      description: 'ແປ້ງຊູກອບເບົາ ສອດໄສ້ຄັສຕາດວານິລາແທ້ເຕັມຄຳ ຫວານພໍດີ',
       stock: 50,
     ),
     Product(
-      name: 'เมลอนปัง',
-      category: 'ขนมปัง',
-      price: 40,
+      name: 'ເມລອນປັງ',
+      category: 'ເຂົ້າໜົມປັງ',
+      price: 22000,
       image: 'assets/images/melon_pan.jpg',
-      description: 'ขนมปังสไตล์ญี่ปุ่น ผิวคุกกี้กรอบหวาน เนื้อในนุ่มฟูหอมนม',
+      description: 'ເຂົ້າໜົມປັງສະໄຕລ໌ຍີ່ປຸ່ນ ຜິວຄຸກກີ້ກອບຫວານ ເນື້ອໃນນຸ້ມຟູຫອມນົມ',
       stock: 35,
     ),
   ];
