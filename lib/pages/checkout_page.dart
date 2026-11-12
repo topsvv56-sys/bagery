@@ -1,4 +1,7 @@
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import '../data/cart.dart';
 import '../data/database_helper.dart';
@@ -44,18 +47,59 @@ class _CheckoutPageState extends State<CheckoutPage> {
     if (mounted) setState(() => _customers = list);
   }
 
+  Future<void> _sendOrderToServer({
+    required Customer customer,
+    required List<OrderItem> items,
+  }) async {
+    try {
+      final url = Uri.parse('http://localhost:3000/api/orders');
+      final res = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'customer': {
+            'name': customer.name,
+            'phone': customer.phone,
+            'address': customer.address,
+            'note': customer.note,
+          },
+          'items': items.map((item) => {
+            'product_id': item.productId,
+            'product_name': item.productName,
+            'price': item.price,
+            'quantity': item.quantity,
+          }).toList(),
+        }),
+      ).timeout(const Duration(seconds: 4));
+
+      debugPrint('Sync order to server status: ${res.statusCode}');
+    } catch (e) {
+      debugPrint('Could not sync to server (offline or server not reachable): $e');
+    }
+  }
+
   Future<void> _confirm() async {
     final cart = Cart.instance;
     if (cart.isEmpty) return;
 
     int customerId;
     String customerName;
+    Customer orderCustomer;
+
     if (_isNew) {
       if (!_formKey.currentState!.validate()) return;
       setState(() => _saving = true);
       final c = _fields.toCustomer();
       customerId = await _db.insertCustomer(c);
       customerName = c.name;
+      orderCustomer = Customer(
+        id: customerId,
+        name: c.name,
+        phone: c.phone,
+        address: c.address,
+        note: c.note,
+        createdAt: c.createdAt,
+      );
     } else {
       if (_selected == null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -66,10 +110,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
       setState(() => _saving = true);
       customerId = _selected!.id!;
       customerName = _selected!.name;
+      orderCustomer = _selected!;
     }
 
     final total = cart.totalPrice;
-    final orderId = await _db.createOrder(customerId, cart.toOrderItems());
+    final orderItems = cart.toOrderItems();
+    final orderId = await _db.createOrder(customerId, orderItems);
+
+    // ส่งข้อมูลออเดอร์ไปยังเซิร์ฟเวอร์หลังบ้าน (http://localhost:3000/api/orders) ทันที
+    await _sendOrderToServer(customer: orderCustomer, items: orderItems);
+
     cart.clear();
     if (!mounted) return;
 

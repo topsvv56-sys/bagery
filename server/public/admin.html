@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sweet Crumb Bakery - ລະບົບຫຼັງບ້ານ (Admin Orders)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;600;700;800&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans Lao', 'Nunito', sans-serif;
+      background: #FDFBF7;
+      color: #3D2B1F;
+      padding: 24px;
+      min-height: 100vh;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #FFFFFF;
+      padding: 16px 24px;
+      border-radius: 16px;
+      border: 1px solid #EFE6DD;
+      box-shadow: 0 2px 8px rgba(61,43,31,0.04);
+      margin-bottom: 24px;
+    }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #8B4513;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      background: #FFF4E5;
+      color: #D96B27;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid #FFE0B2;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: #FFFFFF;
+      padding: 18px 20px;
+      border-radius: 14px;
+      border: 1px solid #EFE6DD;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .stat-title {
+      font-size: 13px;
+      color: #8C7B70;
+      margin-bottom: 6px;
+    }
+    .stat-val {
+      font-size: 26px;
+      font-weight: 800;
+      color: #D96B27;
+    }
+    .orders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+    }
+    .order-card {
+      background: #FFFFFF;
+      border: 1px solid #EFE6DD;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(61,43,31,0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .order-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(61,43,31,0.08);
+    }
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed #EFE6DD;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+    }
+    .order-id {
+      font-weight: 800;
+      color: #8B4513;
+      font-size: 16px;
+    }
+    .order-date {
+      font-size: 12px;
+      color: #A09085;
+    }
+    .customer-info {
+      background: #FAF6F0;
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      font-size: 13px;
+    }
+    .customer-name {
+      font-weight: 700;
+      color: #3D2B1F;
+    }
+    .customer-phone {
+      color: #8C7B70;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+    .item-list {
+      list-style: none;
+      margin-bottom: 16px;
+    }
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      font-size: 13px;
+      border-bottom: 1px solid #F6EFE9;
+    }
+    .item-name {
+      font-weight: 600;
+      color: #4A3828;
+    }
+    .item-qty {
+      background: #EFE6DD;
+      color: #5C4A3E;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 8px;
+      margin-left: 6px;
+    }
+    .item-price {
+      font-weight: 700;
+      color: #8B4513;
+    }
+    .order-total-bar {
+      border-top: 2px solid #F0E6DC;
+      padding-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .total-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #8C7B70;
+    }
+    .total-val {
+      font-size: 20px;
+      font-weight: 800;
+      color: #C94A29;
+    }
+    .btn-refresh {
+      background: #8B4513;
+      color: #FFFFFF;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 13px;
+      transition: background 0.2s;
+    }
+    .btn-refresh:hover { background: #6F360E; }
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #A09085;
+      grid-column: 1 / -1;
+    }
+    @media print {
+      body { padding: 0; background: #fff; }
+      .header, .stats, .btn-refresh { display: none; }
+      .orders-grid { display: block; }
+      .order-card { break-inside: avoid; border: 1px solid #ccc; margin-bottom: 20px; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <h1>
+      🥐 Sweet Crumb Bakery
+      <span class="badge">ລະບົບຫຼັງບ້ານ (Admin Dashboard)</span>
+    </h1>
+    <button class="btn-refresh" onclick="fetchOrders()">🔄 ດຶງຂໍ້ມູນໃໝ່</button>
+  </header>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-title">ອໍເດີທັງໝົດ</div>
+      <div class="stat-val" id="stat-total-orders">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">ຍອດຂາຍລວມ (ກີບ)</div>
+      <div class="stat-val" id="stat-total-revenue">0 ₭</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">ສະຖານະລະບົບ</div>
+      <div class="stat-val" style="font-size: 18px; color: #2E7D32;">● ອອນລາຍ (Auto-sync)</div>
+    </div>
+  </div>
+
+  <div class="orders-grid" id="orders-container">
+    <div class="empty-state">ກຳລັງໂຫຼດຂໍ້ມູນຄຳສັ່ງຊື້...</div>
+  </div>
+
+  <script>
+    function formatMoney(num) {
+      return Number(num || 0).toLocaleString('lo-LA') + ' ₭';
+    }
+
+    function formatDate(iso) {
+      if (!iso) return '-';
+      try {
+        const d = new Date(iso);
+        return d.toLocaleDateString('lo-LA') + ' ' + d.toLocaleTimeString('lo-LA', { hour: '2-digit', minute: '2-digit' });
+      } catch (e) {
+        return iso;
+      }
+    }
+
+    async function fetchOrders() {
+      try {
+        const res = await fetch('/api/orders');
+        const json = await res.json();
+        const orders = json.data || [];
+
+        document.getElementById('stat-total-orders').innerText = orders.length;
+        const totalRev = orders.reduce((sum, o) => sum + (o.total || 0), 0);
+        document.getElementById('stat-total-revenue').innerText = formatMoney(totalRev);
+
+        const container = document.getElementById('orders-container');
+        if (orders.length === 0) {
+          container.innerHTML = '<div class="empty-state">ຍັງບໍ່ມີຄຳສັ່ງຊື້ໃນລະບົບ</div>';
+          return;
+        }
+
+        container.innerHTML = orders.map(o => `
+          <div class="order-card">
+            <div>
+              <div class="order-header">
+                <span class="order-id">📦 ອໍເດີ #${o.id}</span>
+                <span class="order-date">${formatDate(o.created_at)}</span>
+              </div>
+              <div class="customer-info">
+                <div class="customer-name">👤 ${o.customer_name || 'ລູກຄ້າທົ່ວໄປ'}</div>
+                ${o.customer_phone ? `<div class="customer-phone">📞 ${o.customer_phone}</div>` : ''}
+              </div>
+              <ul class="item-list">
+                ${(o.items || []).map(it => `
+                  <li class="item-row">
+                    <span class="item-name">
+                      ${it.product_name || 'ສິນຄ້າ'}
+                      <span class="item-qty">x${it.quantity}</span>
+                    </span>
+                    <span class="item-price">${formatMoney((it.price || 0) * (it.quantity || 1))}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+            <div class="order-total-bar">
+              <span class="total-label">ຍອດລວມທັງໝົດ:</span>
+              <span class="total-val">${formatMoney(o.total)}</span>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        console.error('Error fetching orders:', err);
+        document.getElementById('orders-container').innerHTML =
+          '<div class="empty-state" style="color: #D32F2F;">❌ ບໍ່ສາມາດເຊື່ອມຕໍ່ລະບົບໄດ້ ກະລຸນາກວດສອບ server</div>';
+      }
+    }
+
+    fetchOrders();
+    setInterval(fetchOrders, 8000);
+  </script>
+</body>
+</html>
+

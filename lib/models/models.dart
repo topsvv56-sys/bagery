@@ -85,13 +85,14 @@ class Customer {
       };
 
   Customer copyWith({
+    int? id,
     String? name,
     String? phone,
     String? address,
     String? note,
   }) =>
       Customer(
-        id: id,
+        id: id ?? this.id,
         name: name ?? this.name,
         phone: phone ?? this.phone,
         address: address ?? this.address,

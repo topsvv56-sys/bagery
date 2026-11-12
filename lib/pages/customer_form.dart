@@ -64,7 +64,8 @@ class CustomerFormBody extends StatelessWidget {
             labelText: 'ຊື່ລູກຄ້າ *',
             prefixIcon: Icon(Icons.person, color: AppColors.caramel),
           ),
-          validator: (v) => (v == null || v.trim().isEmpty) ? 'ກະລຸນາໃສ່ຊື່' : null,
+          validator: (v) =>
+              (v == null || v.trim().isEmpty) ? 'ກະລຸນາໃສ່ຊື່' : null,
         ),
         const SizedBox(height: 12),
         TextFormField(
@@ -78,7 +79,8 @@ class CustomerFormBody extends StatelessWidget {
           validator: (v) {
             final digits = (v ?? '').replaceAll(RegExp(r'[^0-9]'), '');
             if (digits.isEmpty) return 'ກະລຸນາໃສ່ເບີໂທ';
-            if (digits.length < 8 || digits.length > 15) return 'ເບີໂທບໍ່ຖືກຕ້ອງ';
+            if (digits.length < 8 || digits.length > 15)
+              return 'ເບີໂທບໍ່ຖືກຕ້ອງ';
             return null;
           },
         ),
@@ -145,7 +147,9 @@ class _CustomerFormPageState extends State<CustomerFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(_isEdit ? 'ແກ້ໄຂຂໍ້ມູນລູກຄ້າ' : 'ເພີ່ມລູກຄ້າໃໝ່')),
+      appBar: AppBar(
+        title: Text(_isEdit ? 'ແກ້ໄຂຂໍ້ມູນລູກຄ້າ' : 'ເພີ່ມລູກຄ້າໃໝ່'),
+      ),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -176,4 +180,3 @@ class _CustomerFormPageState extends State<CustomerFormPage> {
     );
   }
 }
-

@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 const DB_FILE = path.join(__dirname, 'bakery_data.json');
 
@@ -261,18 +262,38 @@ app.get('/api/orders', (req, res) => {
 
 // 6. ສ້າງຄຳສັ່ງຊື້ໃໝ່ (ພ້ອມຕັດສະຕັອກສິນຄ້າ)
 app.post('/api/orders', (req, res) => {
-  const { customer_id, items } = req.body;
-  if (!customer_id) {
-    return res.status(400).json({ error: "ກະລຸນາໃສ່ customer_id" });
-  }
+  let { customer_id, customer, items } = req.body;
+
   if (!items || !Array.isArray(items) || items.length === 0) {
     return res.status(400).json({ error: "ກະລຸນາໃສ່ລາຍການສິນຄ້າໃນ items" });
   }
 
   const db = readDb();
-  const customer = db.customers.find(c => c.id === parseInt(customer_id));
-  if (!customer) {
-    return res.status(404).json({ error: "ບໍ່ພົບລະຫັດລູກຄ້ານີ້" });
+  if (!db.customers) db.customers = [];
+  if (!db.orders) db.orders = [];
+
+  let foundCustomer = null;
+
+  if (customer_id) {
+    foundCustomer = db.customers.find(c => c.id === parseInt(customer_id));
+  }
+
+  // ຖ້າບໍ່ພົບ ຫຼື ສົ່ງ customer ມາພ້ອມ (ເຊັ່ນຈາກແອັບມືຖື)
+  if (!foundCustomer && customer && customer.name) {
+    const nextCustId = db.customers.length > 0 ? Math.max(...db.customers.map(c => c.id)) + 1 : 1;
+    foundCustomer = {
+      id: nextCustId,
+      name: customer.name.trim(),
+      phone: (customer.phone || '').trim(),
+      address: (customer.address || '').trim(),
+      note: (customer.note || '').trim(),
+      created_at: new Date().toISOString()
+    };
+    db.customers.push(foundCustomer);
+  }
+
+  if (!foundCustomer) {
+    return res.status(400).json({ error: "ກະລຸນາໃສ່ customer_id ຫຼື ຂໍ້ມູນ customer" });
   }
 
   let total = 0;
@@ -304,8 +325,9 @@ app.post('/api/orders', (req, res) => {
   const nextOrderId = db.orders.length > 0 ? Math.max(...db.orders.map(o => o.id)) + 1 : 1;
   const newOrder = {
     id: nextOrderId,
-    customer_id: customer.id,
-    customer_name: customer.name,
+    customer_id: foundCustomer.id,
+    customer_name: foundCustomer.name,
+    customer_phone: foundCustomer.phone,
     total: total,
     created_at: new Date().toISOString(),
     items: orderItems
